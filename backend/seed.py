@@ -1,13 +1,15 @@
 import psycopg2
 from datetime import datetime
+import os
+from dotenv import load_dotenv
 
-conn = psycopg2.connect(
-    dbname="cloud_db",
-    user="postgres",
-    password="postgres",
-    host="localhost",
-    port="5432"
-)
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL is not set in environment")
+
+conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
 resources = [
@@ -18,7 +20,7 @@ resources = [
     ("cache-server", "instance", "GCP", "n1-standard-2", None, 65, 70, 50),
     ("backup-storage", "storage", "AWS", None, 1000, None, None, 100),
     ("log-storage", "storage", "AWS", None, 500, None, None, 75),
-    ("database-storage", "storage", "AWS", None, 200, None, None, 25)
+    ("database-storage", "storage", "AWS", None, 200, None, None, 25),
 ]
 
 for r in resources:
