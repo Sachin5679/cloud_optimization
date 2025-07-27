@@ -47,7 +47,7 @@ export default function RecommendationsList({
             </div>
             <button
               onClick={() => toggleImplemented(rec.id)}
-              className={`px-3 py-1 ${
+              className={`px-3 py-1 cursor-pointer ${
                 implementedIds.includes(rec.id)
                   ? "bg-green-100 text-green-700"
                   : "bg-orange-400 text-white"
